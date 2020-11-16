@@ -24,30 +24,30 @@ npx alt-yarn-why ./path-to-lock-file.lock name-of-package
 cd ember-cli
 npx alt-yarn-why ./yarn.lock fs-extra
 > {
-  "fs-extra@0.24.0": [
-    "broccoli-config-replace@1.1.2"
-  ],
-  "fs-extra@0.30.0": [
-    "ember-cli-internal-test-helpers@0.9.1",
-    "fixturify@0.3.4"
-  ],
-  "fs-extra@4.0.3": [
-    "yam@1.0.0"
-  ],
-  "fs-extra@5.0.0": [
-    "fast-sourcemap-concat@2.1.0"
-  ],
-  "fs-extra@7.0.1": [
-    "ember-cli-blueprint-test-helpers@0.19.2"
-  ],
-  "fs-extra@8.1.0": [
-    "broccoli-concat@4.2.4",
-    "broccoli-output-wrapper@3.2.1",
-    "broccoli-stew@3.0.0",
-    "fixturify@2.1.0",
-    "fs-merger@3.1.0"
-  ],
-  "fs-extra@9.0.1": []
+  "fs-extra@0.24.0": {
+    "broccoli-config-replace@1.1.2": 1
+  },
+  "fs-extra@0.30.0": {
+    "ember-cli-internal-test-helpers@0.9.1": 1,
+    "fixturify@0.3.4": 1
+  },
+  "fs-extra@4.0.3": {
+    "yam@1.0.0": 1
+  },
+  "fs-extra@5.0.0": {
+    "fast-sourcemap-concat@2.1.0": 1
+  },
+  "fs-extra@7.0.1": {
+    "ember-cli-blueprint-test-helpers@0.19.2": 1
+  },
+  "fs-extra@8.1.0": {
+    "broccoli-concat@4.2.4": 1,
+    "broccoli-output-wrapper@3.2.1": 1,
+    "broccoli-stew@3.0.0": 1,
+    "fixturify@2.1.0": 1,
+    "fs-merger@3.1.0": 1
+  },
+  "fs-extra@9.0.1": {}
 }
 ```
 

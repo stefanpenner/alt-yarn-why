@@ -40,7 +40,10 @@ export default function (lockfilePath, _targetName) {
         const resolvedVersion = depMap[targetName + '@' + currentVariant].version;
         const key = targetName + '@' + resolvedVersion;
         if (typeof intermediate[key] === 'object' && intermediate[key] !== null) {
-          intermediate[key][name + '@' + version] = true;
+          const resolvedTarget = intermediate[key];
+          const depKey = name + '@' + version;
+          resolvedTarget[depKey] = resolvedTarget[depKey] || 0;
+          resolvedTarget[depKey]++;
         }
       }
     }
@@ -48,7 +51,7 @@ export default function (lockfilePath, _targetName) {
 
   const output = Object.create(null);
   for (const name of Object.keys(intermediate)) {
-    output[name] = Object.keys(intermediate[name]);
+    output[name] = intermediate[name];
   }
 
   return output;
