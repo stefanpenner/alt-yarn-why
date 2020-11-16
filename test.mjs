@@ -51,6 +51,17 @@ describe('alt-yarn-why', function () {
       '@yarnpkg/lockfile@1.1.0': [],
     });
 
+    expect(lib('./yarn.lock', '@yarnpkg/lockfile@1.1.0')).to.eql({
+      '@yarnpkg/lockfile@1.1.0': [],
+    });
+
+    expect(lib('./yarn.lock', '@yarnpkg/lockfile@^1.0.0')).to.eql({
+      '@yarnpkg/lockfile@1.1.0': [],
+    });
+
+    expect(lib('./yarn.lock', '@yarnpkg/lockfile@2.0.0')).to.eql({});
+    expect(lib('./yarn.lock', '@yarnpkg/lockfile@^2.0.0')).to.eql({});
+
     expect(lib('./fixtures/ember-cli.lock', '@yarnpkg/lockfile')).to.eql({});
     expect(lib('./fixtures/ember-cli.lock', 'fs-extra')).to.eql({
       'fs-extra@0.24.0': ['broccoli-config-replace@1.1.2'],

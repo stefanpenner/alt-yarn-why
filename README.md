@@ -51,6 +51,10 @@ npx alt-yarn-why ./yarn.lock fs-extra
 }
 ```
 
+## Advanced Features:
+
+* Semver version constraints (works with any semver constraints):   `npx alt-yarn-why ./path-to-lock-file.lock name-of-package@^1.0.2`
+
 ## as a library
 
 ```sh

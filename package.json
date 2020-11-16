@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@yarnpkg/lockfile": "^1.1.0",
-    "parse-package-name": "^0.1.0"
+    "parse-package-name": "^0.1.0",
+    "semver": "^7.3.2"
   },
   "engines": {
     "node": "^15.0.0"

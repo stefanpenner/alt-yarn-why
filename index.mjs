@@ -1,6 +1,7 @@
 import lockfile from '@yarnpkg/lockfile';
 import fs from 'fs';
 import parsePackageName from 'parse-package-name';
+import semver from 'semver';
 
 function filterVariants(variant, depMap) {
   const name = parsePackageName(variant).name;
@@ -9,17 +10,23 @@ function filterVariants(variant, depMap) {
   return Object.keys(depMap).filter(byName);
 }
 
-export default function (lockfilePath, targetName) {
+export default function (lockfilePath, _targetName) {
   const yarn = lockfile.parse(fs.readFileSync(lockfilePath, 'utf8'));
   if (!yarn.type === 'success') {
     throw new Error(`@yarnpkg/lockfile unable to parse ${lockfilePath}`);
   }
 
+  const { name: targetName, version: versionConstraint } = parsePackageName(_targetName);
   const depMap = yarn.object;
   const intermediate = Object.create(null);
 
   for (const variant of filterVariants(targetName, depMap)) {
-    intermediate[targetName + '@' + depMap[variant].version] = {};
+    const resolvedVersion = depMap[variant].version;
+    if (semver.satisfies(resolvedVersion, versionConstraint) === false) {
+      continue;
+    }
+
+    intermediate[targetName + '@' + resolvedVersion] = {};
   }
 
   for (const depName of Object.keys(depMap)) {
@@ -30,11 +37,10 @@ export default function (lockfilePath, targetName) {
     if (typeof dependencies === 'object' && dependencies !== null) {
       const currentVariant = dependencies[targetName];
       if (currentVariant) {
-        const key = targetName + '@' + depMap[targetName + '@' + currentVariant].version;
+        const resolvedVersion = depMap[targetName + '@' + currentVariant].version;
+        const key = targetName + '@' + resolvedVersion;
         if (typeof intermediate[key] === 'object' && intermediate[key] !== null) {
           intermediate[key][name + '@' + version] = true;
-        } else {
-          throw new Error(`Unexpected Dependency: ${key}`);
         }
       }
     }
