@@ -20,7 +20,7 @@ npx alt-yarn-why ./path-to-lock-file.lock name-of-package
 
 ## example
 
-```
+```sh
 cd ember-cli
 npx alt-yarn-why ./yarn.lock fs-extra
 > {
@@ -72,5 +72,5 @@ yarn add alt-yarn-why
 // index.mjs
 import altYarnWhy from 'alt-yarn-why';
 
-altYarnWhy(pathToLockFile, packageNameOrRegexp) === { /* dictionary of <matched> to [...retainers] */ }
+altYarnWhy(pathToLockFile, packageName) === { /* dictionary of <matched> to [...retainers] */ }
 ```
