@@ -16,26 +16,33 @@ export default function (lockfilePath, targetName) {
   }
 
   const depMap = yarn.object;
-  const output = Object.create(null);
+  const intermediate = Object.create(null);
 
   for (const variant of filterVariants(targetName, depMap)) {
-    output[targetName + '@' + depMap[variant].version] = [];
+    intermediate[targetName + '@' + depMap[variant].version] = {};
   }
 
-  for (const name of Object.keys(depMap)) {
-    const dep = depMap[name];
+  for (const depName of Object.keys(depMap)) {
+    const dep = depMap[depName];
+    const version = dep.version;
+    const name = parsePackageName(depName).name;
     const dependencies = dep.dependencies;
     if (typeof dependencies === 'object' && dependencies !== null) {
       const currentVariant = dependencies[targetName];
       if (currentVariant) {
         const key = targetName + '@' + depMap[targetName + '@' + currentVariant].version;
-        if (Array.isArray(output[key])) {
-          output[key].push(name);
+        if (typeof intermediate[key] === 'object' && intermediate[key] !== null) {
+          intermediate[key][name + '@' + version] = true;
         } else {
           throw new Error(`Unexpected Dependency: ${key}`);
         }
       }
     }
+  }
+
+  const output = Object.create(null);
+  for (const name of Object.keys(intermediate)) {
+    output[name] = Object.keys(intermediate[name]);
   }
 
   return output;
