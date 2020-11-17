@@ -9,13 +9,16 @@ function filterVariants(variant, depMap) {
 
   return Object.keys(depMap).filter(byName);
 }
-
-export function whoDependsOn(lockfilePath, _targetName) {
+function loadLockfile(lockfilePath) {
   const yarn = lockfile.parse(fs.readFileSync(lockfilePath, 'utf8'));
   if (!yarn.type === 'success') {
     throw new Error(`@yarnpkg/lockfile unable to parse ${lockfilePath}`);
   }
+  return yarn;
+}
 
+export function whoDependsOn(lockfilePath, _targetName) {
+  const yarn = loadLockfile(lockfilePath);
   const { name: targetName, version: versionConstraint } = parsePackageName(_targetName);
   const depMap = yarn.object;
   const intermediate = Object.create(null);
@@ -55,4 +58,42 @@ export function whoDependsOn(lockfilePath, _targetName) {
   }
 
   return output;
+}
+
+export function duplicates(lockfilePath) {
+  const yarn = loadLockfile(lockfilePath);
+  const intermediate = Object.create(null);
+  for (const packageName of Object.keys(yarn.object)) {
+    const dep = yarn.object[packageName];
+    const { name } = parsePackageName(packageName);
+    intermediate[name] = intermediate[name] || Object.create(null);
+    intermediate[name][dep.version] = intermediate[name][dep.version] || 0;
+    intermediate[name][dep.version]++;
+  }
+
+  for (const name of Object.keys(intermediate)) {
+    if (Object.keys(intermediate[name]).length === 1) {
+      delete intermediate[name];
+    }
+  }
+  const result = [];
+
+  for (const name of Object.keys(intermediate)) {
+    result.push({
+      name,
+      versions: intermediate[name],
+    });
+  }
+
+  result.sort((a, b) => sumVersions(b.versions) - sumVersions(a.versions));
+
+  return result;
+}
+
+function sumVersions(versions) {
+  let sum = 0;
+  for (const count of Object.values(versions)) {
+    sum += count;
+  }
+  return sum;
 }

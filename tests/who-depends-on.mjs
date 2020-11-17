@@ -2,8 +2,7 @@ import chai from 'chai'; // eslint-disable-line node/no-unpublished-import
 import execa from 'execa'; // eslint-disable-line node/no-unpublished-import
 const { expect } = chai;
 
-import { whoDependsOn } from './index.mjs';
-
+import { whoDependsOn } from '../index.mjs';
 describe('alt-yarn-why who-depends-on', function () {
   describe('acceptance', function () {
     it('valid args', async function () {

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { whoDependsOn } from './index.mjs';
+import { whoDependsOn, duplicates } from './index.mjs';
 import fs from 'fs';
 import meow from 'meow';
 import chalk from 'chalk';
@@ -37,6 +37,40 @@ const cli = meow(
       {gray $} {italic {blue alt-yarn-why who-depends-on} {cyan yarn.lock 'ember-cli-version-checker'}}
       {gray $} {italic {blue alt-yarn-why who-depends-on} {cyan yarn.lock 'ember-cli-version-checker@4'}}
       {gray $} {italic {blue alt-yarn-why who-depends-on} {cyan yarn.lock 'ember-cli-version-checker@4 || 5'}}
+
+
+    {bold duplicates}
+
+    This command quickly surface duplicate dependencies. These are sorted by
+    most duplicated to least.
+
+    Example
+      {gray $} {italic {blue alt-yarn-why duplicates}  {cyan ./yarn.lock}}
+      {gray
+      > [
+          \{
+            "name": "debug",
+            "versions": \{
+              "2.6.9": 7,
+              "4.2.0": 4,
+              "3.2.6": 4,
+              "3.1.0": 1,
+              "4.1.1": 1
+            \}
+          \},
+          \{
+            "name": "rimraf",
+            "versions": \{
+              "2.6.3": 2,
+              "2.7.1": 11,
+              "3.0.2": 2
+            \}
+          \}
+        ]
+      }
+
+    Other Examples
+      {gray $} {italic {blue alt-yarn-why dupcliates} {cyan yarn.lock}} | jq '.[:5]' # Show Top 5 Duplicates
 `,
   {},
 );
@@ -55,6 +89,8 @@ if (command === 'who-depends-on' && cli.input.length === 3) {
   }
 
   console.log(JSON.stringify(whoDependsOn(lockfilePath, targetName), null, 2));
+} else if (command === 'duplicates' && cli.input.length === 2) {
+  console.log(JSON.stringify(duplicates(lockfilePath), null, 2));
 } else {
   cli.showHelp();
 }
