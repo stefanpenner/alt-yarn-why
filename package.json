@@ -1,6 +1,6 @@
 {
   "name": "alt-yarn-why",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "main": "index.mjs",
   "license": "MIT",
   "bin": {
