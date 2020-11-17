@@ -14,7 +14,7 @@ This library aims to help answer those questions.
 ## usage
 ```sh
   Usage
-    $ alt-yarn-why <command> <lock-file> <package-name>
+    $ alt-yarn-why <command> <...args>
 
   Commands:
     who-depends-on
