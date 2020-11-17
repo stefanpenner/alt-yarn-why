@@ -8,7 +8,7 @@ import chalk from 'chalk';
 const cli = meow(
   chalk`
   {bold Usage}
-    {gray $} {blue alt-yarn-why} {gray <command> <lock-file> <package-name>}
+    {gray $} {blue alt-yarn-why} {gray <...args>}
 
   {bold Commands:}
     {bold who-depends-on}
