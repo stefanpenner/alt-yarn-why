@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@yarnpkg/lockfile": "^1.1.0",
+    "chalk": "^4.1.0",
+    "meow": "^8.0.0",
     "parse-package-name": "^0.1.0",
     "semver": "^7.3.2"
   },

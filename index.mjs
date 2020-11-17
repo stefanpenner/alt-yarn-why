@@ -10,7 +10,7 @@ function filterVariants(variant, depMap) {
   return Object.keys(depMap).filter(byName);
 }
 
-export default function (lockfilePath, _targetName) {
+export function whoDependsOn(lockfilePath, _targetName) {
   const yarn = lockfile.parse(fs.readFileSync(lockfilePath, 'utf8'));
   if (!yarn.type === 'success') {
     throw new Error(`@yarnpkg/lockfile unable to parse ${lockfilePath}`);
