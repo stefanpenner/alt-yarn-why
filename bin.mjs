@@ -50,6 +50,7 @@ const cli = meow(
       > [
           \{
             "name": "debug",
+            "total": 17,
             "versions": \{
               "2.6.9": 7,
               "4.2.0": 4,
@@ -60,6 +61,7 @@ const cli = meow(
           \},
           \{
             "name": "rimraf",
+            "total": 15,
             "versions": \{
               "2.6.3": 2,
               "2.7.1": 11,

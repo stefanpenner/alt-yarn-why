@@ -79,13 +79,15 @@ export function duplicates(lockfilePath) {
   const result = [];
 
   for (const name of Object.keys(intermediate)) {
+    const versions = intermediate[name];
     result.push({
       name,
-      versions: intermediate[name],
+      versions,
+      total: sumVersions(versions),
     });
   }
 
-  result.sort((a, b) => sumVersions(b.versions) - sumVersions(a.versions));
+  result.sort((a, b) => b.total - a.total);
 
   return result;
 }

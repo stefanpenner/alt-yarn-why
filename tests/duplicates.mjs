@@ -29,6 +29,7 @@ describe('alt-yarn-why duplicates', function () {
     expect(duplicates('./yarn.lock').length).to.eql(27);
     expect(duplicates('./yarn.lock')[0]).to.eql({
       name: 'strip-ansi',
+      total: 5,
       versions: {
         '4.0.0': 1,
         '5.2.0': 3,
@@ -38,6 +39,7 @@ describe('alt-yarn-why duplicates', function () {
     expect(duplicates('./fixtures/ember-cli.lock').length).to.eql(157);
     expect(duplicates('./fixtures/ember-cli.lock')[0]).to.eql({
       name: 'debug',
+      total: 17,
       versions: {
         '2.6.9': 7,
         '3.1.0': 1,
