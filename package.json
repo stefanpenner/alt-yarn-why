@@ -18,7 +18,10 @@
   },
   "files": [
     "index.mjs",
-    "bin.mjs"
+    "bin.mjs",
+    "lib/duplicates.mjs",
+    "lib/who-depends-on.mjs",
+    "lib/utils/load-lockfile.mjs"
   ],
   "volta": {
     "node": "15.2.1",
