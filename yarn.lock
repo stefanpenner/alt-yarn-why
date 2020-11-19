@@ -991,6 +991,11 @@ minimist@^1.2.5:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
 
+mjs-dirname@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/mjs-dirname/-/mjs-dirname-1.0.0.tgz#bdb8572832f776d741f1fe37094efd715ada8e7c"
+  integrity sha512-EbQVpGy8tmWIKp6ujBhH+dD+bivjRTwiEgkk6nB01lLSEMUxgx9oBJ+8lLfGVGU2WWBv4m1HuvhQU+8fP40OCQ==
+
 mkdirp@^0.5.1:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"

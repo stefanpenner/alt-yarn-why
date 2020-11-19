@@ -1,6 +1,10 @@
 import chai from 'chai'; // eslint-disable-line node/no-unpublished-import
 import execa from 'execa'; // eslint-disable-line node/no-unpublished-import
+import { dirname } from 'mjs-dirname';
+
 const { expect } = chai;
+const __dirname = dirname(import.meta.url);
+const ROOT = `${__dirname}/../`;
 
 import { whoDependsOn } from '../index.mjs';
 describe('alt-yarn-why who-depends-on', function () {
@@ -8,8 +12,9 @@ describe('alt-yarn-why who-depends-on', function () {
     it('valid args', async function () {
       const child = await execa(
         './bin.mjs',
-        ['who-depends-on', './yarn.lock', '@yarnpkg/lockfile'],
+        ['who-depends-on', `./yarn.lock`, '@yarnpkg/lockfile'],
         {
+          cwd: ROOT,
           reject: false,
         },
       );
@@ -22,6 +27,7 @@ describe('alt-yarn-why who-depends-on', function () {
 
     it('no args', async function () {
       const child = await execa('./bin.mjs', ['who-depends-on'], {
+        cwd: ROOT,
         reject: false,
       });
       expect(child.exitCode).to.eql(2);
@@ -31,6 +37,7 @@ describe('alt-yarn-why who-depends-on', function () {
 
     it('missing package-name', async function () {
       const child = await execa('./bin.mjs', ['./yarn.lock'], {
+        cwd: ROOT,
         reject: false,
       });
       expect(child.exitCode).to.eql(2);
@@ -40,6 +47,7 @@ describe('alt-yarn-why who-depends-on', function () {
 
     it('invalid lockfile path', async function () {
       const child = await execa('./bin.mjs', ['./yarn-invalid.lock'], {
+        cwd: ROOT,
         reject: false,
       });
       expect(child.exitCode).to.eql(2);
@@ -49,24 +57,24 @@ describe('alt-yarn-why who-depends-on', function () {
   });
 
   it('works', function () {
-    expect(whoDependsOn('./yarn.lock', 'something-non-existent')).to.eql({});
-    expect(whoDependsOn('./yarn.lock', '@yarnpkg/lockfile')).to.eql({
+    expect(whoDependsOn(`${ROOT}/yarn.lock`, 'something-non-existent')).to.eql({});
+    expect(whoDependsOn(`${ROOT}/yarn.lock`, '@yarnpkg/lockfile')).to.eql({
       '@yarnpkg/lockfile@1.1.0': {},
     });
 
-    expect(whoDependsOn('./yarn.lock', '@yarnpkg/lockfile@1.1.0')).to.eql({
+    expect(whoDependsOn(`${ROOT}/yarn.lock`, '@yarnpkg/lockfile@1.1.0')).to.eql({
       '@yarnpkg/lockfile@1.1.0': {},
     });
 
-    expect(whoDependsOn('./yarn.lock', '@yarnpkg/lockfile@^1.0.0')).to.eql({
+    expect(whoDependsOn(`${ROOT}/yarn.lock`, '@yarnpkg/lockfile@^1.0.0')).to.eql({
       '@yarnpkg/lockfile@1.1.0': {},
     });
 
-    expect(whoDependsOn('./yarn.lock', '@yarnpkg/lockfile@2.0.0')).to.eql({});
-    expect(whoDependsOn('./yarn.lock', '@yarnpkg/lockfile@^2.0.0')).to.eql({});
+    expect(whoDependsOn(`${ROOT}/yarn.lock`, '@yarnpkg/lockfile@2.0.0')).to.eql({});
+    expect(whoDependsOn(`${ROOT}/yarn.lock`, '@yarnpkg/lockfile@^2.0.0')).to.eql({});
 
-    expect(whoDependsOn('./tests/fixtures/ember-cli.lock', '@yarnpkg/lockfile')).to.eql({});
-    expect(whoDependsOn('./tests/fixtures/ember-cli.lock', 'fs-extra')).to.eql({
+    expect(whoDependsOn(`${__dirname}/fixtures/ember-cli.lock`, '@yarnpkg/lockfile')).to.eql({});
+    expect(whoDependsOn(`${__dirname}/fixtures/ember-cli.lock`, 'fs-extra')).to.eql({
       'fs-extra@0.24.0': { 'broccoli-config-replace@1.1.2': 1 },
       'fs-extra@0.30.0': { 'ember-cli-internal-test-helpers@0.9.1': 1, 'fixturify@0.3.4': 1 },
       'fs-extra@4.0.3': { 'yam@1.0.0': 1 },
@@ -82,7 +90,7 @@ describe('alt-yarn-why who-depends-on', function () {
       'fs-extra@9.0.1': {},
     });
 
-    expect(whoDependsOn('./tests/fixtures/ember-cli.lock', '@types/fs-extra')).to.eql({
+    expect(whoDependsOn(`${__dirname}/fixtures/ember-cli.lock`, '@types/fs-extra')).to.eql({
       '@types/fs-extra@8.1.0': { 'fixturify@2.1.0': 1 },
     });
   });
