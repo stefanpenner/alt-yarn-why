@@ -41,8 +41,8 @@ describe('alt-yarn-why duplicates', function () {
         '6.0.0': 1,
       },
     });
-    expect(duplicates(`${__dirname}/fixtures/ember-cli.lock`).length).to.eql(157);
-    expect(duplicates(`${__dirname}/fixtures/ember-cli.lock`)[0]).to.eql({
+    expect(duplicates(`${__dirname}/fixtures/ember-cli/yarn.lock`).length).to.eql(157);
+    expect(duplicates(`${__dirname}/fixtures/ember-cli/yarn.lock`)[0]).to.eql({
       name: 'debug',
       total: 17,
       versions: {
