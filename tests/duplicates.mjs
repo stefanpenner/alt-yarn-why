@@ -20,7 +20,7 @@ describe('alt-yarn-why duplicates', function () {
         reject: false,
       });
       expect(child.exitCode).to.eql(2);
-      expect(child.stdout).to.match(/alt-yarn-why <command> <lock-file> <package-name>/);
+      expect(child.stdout).to.match(/\$ alt-yarn-why <...args/);
       expect(child.stderr).to.eql('');
     });
   });
