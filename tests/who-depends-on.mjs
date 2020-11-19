@@ -65,8 +65,8 @@ describe('alt-yarn-why who-depends-on', function () {
     expect(whoDependsOn('./yarn.lock', '@yarnpkg/lockfile@2.0.0')).to.eql({});
     expect(whoDependsOn('./yarn.lock', '@yarnpkg/lockfile@^2.0.0')).to.eql({});
 
-    expect(whoDependsOn('./fixtures/ember-cli.lock', '@yarnpkg/lockfile')).to.eql({});
-    expect(whoDependsOn('./fixtures/ember-cli.lock', 'fs-extra')).to.eql({
+    expect(whoDependsOn('./tests/fixtures/ember-cli.lock', '@yarnpkg/lockfile')).to.eql({});
+    expect(whoDependsOn('./tests/fixtures/ember-cli.lock', 'fs-extra')).to.eql({
       'fs-extra@0.24.0': { 'broccoli-config-replace@1.1.2': 1 },
       'fs-extra@0.30.0': { 'ember-cli-internal-test-helpers@0.9.1': 1, 'fixturify@0.3.4': 1 },
       'fs-extra@4.0.3': { 'yam@1.0.0': 1 },
@@ -82,7 +82,7 @@ describe('alt-yarn-why who-depends-on', function () {
       'fs-extra@9.0.1': {},
     });
 
-    expect(whoDependsOn('./fixtures/ember-cli.lock', '@types/fs-extra')).to.eql({
+    expect(whoDependsOn('./tests/fixtures/ember-cli.lock', '@types/fs-extra')).to.eql({
       '@types/fs-extra@8.1.0': { 'fixturify@2.1.0': 1 },
     });
   });
